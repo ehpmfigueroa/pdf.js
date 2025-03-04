@@ -13,9 +13,9 @@
  * limitations under the License.
  */
 
+import OpenJPEG from "../../external/openjpeg/openjpeg.js";
 import { BaseException, warn } from "../shared/util.js";
 import { fetchBinaryData } from "./core_utils.js";
-import OpenJPEG from "../../external/openjpeg/openjpeg.js";
 import { Stream } from "./stream.js";
 
 class JpxError extends BaseException {
@@ -57,7 +57,7 @@ class JpxImage {
     try {
       const mod = await (typeof PDFJSDev === "undefined"
         ? import(path) // eslint-disable-line no-unsanitized/method
-        : __non_webpack_import__(path));
+        : __raw_import__(path));
       instance = mod.default();
     } catch (e) {
       warn(`JpxImage#getJsModule: ${e}`);

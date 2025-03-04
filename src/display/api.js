@@ -17,6 +17,20 @@
  * @module pdfjsLib
  */
 
+import { DOMCMapReaderFactory } from "display-cmap_reader_factory";
+import { PDFFetchStream } from "display-fetch_stream";
+import { PDFNetworkStream } from "display-network";
+import { PDFNodeStream } from "display-node_stream";
+import {
+  NodeCanvasFactory,
+  NodeCMapReaderFactory,
+  NodeFilterFactory,
+  NodeStandardFontDataFactory,
+  NodeWasmFactory,
+} from "display-node_utils";
+import { DOMStandardFontDataFactory } from "display-standard_fontdata_factory";
+import { DOMWasmFactory } from "display-wasm_factory";
+import { MessageHandler, wrapReason } from "../shared/message_handler.js";
 import {
   _isValidExplicitDest,
   AbortException,
@@ -38,7 +52,8 @@ import {
   PrintAnnotationStorage,
   SerializableEmpty,
 } from "./annotation_storage.js";
-import { FontFaceObject, FontLoader } from "./font_loader.js";
+import { CanvasGraphics } from "./canvas.js";
+import { DOMCanvasFactory } from "./canvas_factory.js";
 import {
   isDataScheme,
   isValidFetchUrl,
@@ -46,28 +61,13 @@ import {
   RenderingCancelledException,
   StatTimer,
 } from "./display_utils.js";
-import { MessageHandler, wrapReason } from "../shared/message_handler.js";
-import {
-  NodeCanvasFactory,
-  NodeCMapReaderFactory,
-  NodeFilterFactory,
-  NodeStandardFontDataFactory,
-  NodeWasmFactory,
-} from "display-node_utils";
-import { CanvasGraphics } from "./canvas.js";
-import { DOMCanvasFactory } from "./canvas_factory.js";
-import { DOMCMapReaderFactory } from "display-cmap_reader_factory";
 import { DOMFilterFactory } from "./filter_factory.js";
-import { DOMStandardFontDataFactory } from "display-standard_fontdata_factory";
-import { DOMWasmFactory } from "display-wasm_factory";
-import { GlobalWorkerOptions } from "./worker_options.js";
+import { FontFaceObject, FontLoader } from "./font_loader.js";
 import { Metadata } from "./metadata.js";
 import { OptionalContentConfig } from "./optional_content_config.js";
-import { PDFDataTransportStream } from "./transport_stream.js";
-import { PDFFetchStream } from "display-fetch_stream";
-import { PDFNetworkStream } from "display-network";
-import { PDFNodeStream } from "display-node_stream";
 import { TextLayer } from "./text_layer.js";
+import { PDFDataTransportStream } from "./transport_stream.js";
+import { GlobalWorkerOptions } from "./worker_options.js";
 import { XfaText } from "./xfa_text.js";
 
 const DEFAULT_RANGE_CHUNK_SIZE = 65536; // 2^16 = 65536
@@ -2393,7 +2393,7 @@ class PDFWorker {
       const worker =
         typeof PDFJSDev === "undefined"
           ? await import("pdfjs/pdf.worker.js")
-          : await __non_webpack_import__(this.workerSrc);
+          : await __raw_import__(this.workerSrc);
       return worker.WorkerMessageHandler;
     };
 
@@ -3499,5 +3499,6 @@ export {
   PDFPageProxy,
   PDFWorker,
   RenderTask,
-  version,
+  version
 };
+
