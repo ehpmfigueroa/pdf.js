@@ -13,38 +13,38 @@
  * limitations under the License.
  */
 
-import {
-  babelPluginPDFJSPreprocessor,
-  preprocessPDFJSCode,
-} from "./external/builder/babel-plugin-pdfjs-preprocessor.mjs";
-import { exec, execSync, spawn, spawnSync } from "child_process";
-import autoprefixer from "autoprefixer";
 import babel from "@babel/core";
-import crypto from "crypto";
-import { fileURLToPath } from "url";
-import fs from "fs";
-import gulp from "gulp";
-import hljs from "highlight.js";
 import layouts from "@metalsmith/layouts";
 import markdown from "@metalsmith/markdown";
+import autoprefixer from "autoprefixer";
+import { exec, execSync, spawn, spawnSync } from "child_process";
+import crypto from "crypto";
+import fs from "fs";
+import gulp from "gulp";
+import postcss from "gulp-postcss";
+import rename from "gulp-rename";
+import replace from "gulp-replace";
+import zip from "gulp-zip";
+import hljs from "highlight.js";
 import Metalsmith from "metalsmith";
+import relative from "metalsmith-html-relative";
 import ordered from "ordered-read-streams";
 import path from "path";
-import postcss from "gulp-postcss";
 import postcssDarkThemeClass from "postcss-dark-theme-class";
 import postcssDirPseudoClass from "postcss-dir-pseudo-class";
 import postcssDiscardComments from "postcss-discard-comments";
 import postcssNesting from "postcss-nesting";
-import { preprocess } from "./external/builder/builder.mjs";
-import relative from "metalsmith-html-relative";
-import rename from "gulp-rename";
-import replace from "gulp-replace";
 import stream from "stream";
 import TerserPlugin from "terser-webpack-plugin";
+import { fileURLToPath } from "url";
 import Vinyl from "vinyl";
 import webpack2 from "webpack";
 import webpackStream from "webpack-stream";
-import zip from "gulp-zip";
+import {
+  babelPluginPDFJSPreprocessor,
+  preprocessPDFJSCode,
+} from "./external/builder/babel-plugin-pdfjs-preprocessor.mjs";
+import { preprocess } from "./external/builder/builder.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -2280,7 +2280,7 @@ gulp.task(
 function packageJson() {
   const VERSION = getVersionJSON().version;
 
-  const DIST_NAME = "pdfjs-dist";
+  const DIST_NAME = "@ehealthpartners/pdfjs-dist";
   const DIST_DESCRIPTION = "Generic build of Mozilla's PDF.js library.";
   const DIST_KEYWORDS = ["Mozilla", "pdf", "pdf.js"];
   const DIST_HOMEPAGE = "https://mozilla.github.io/pdf.js/";

@@ -1,6 +1,10 @@
 {
-  "name": "pdf.js",
+  "name": "@ehealthpartners/pdf.js",
   "type": "module",
+  "scripts": {
+    "npm-publish": "npm publish ./build/dist --access=public",
+    "build": "gulp dist"
+  },
   "devDependencies": {
     "@babel/core": "^7.26.9",
     "@babel/preset-env": "^7.26.9",
